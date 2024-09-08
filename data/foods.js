@@ -1,6 +1,5 @@
 const foods = [
     {
-        id: 1,
         name: 'Continente Equilíbrio Leite Magro',
         unit: 'ml',
         serving_size: 100,
@@ -14,7 +13,6 @@ const foods = [
     },
 
     {
-        id: 2,
         name: 'Continente Cereais Arroz Tufado com Chocolate',
         unit: 'g',
         serving_size: 100,
