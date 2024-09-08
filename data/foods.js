@@ -28,4 +28,12 @@ const foods = [
     }
 ]
 
+foods.forEach(food => {
+    const fatCalories = food.fat * 9;
+    const carbohydrates_calories = food.carbohydrates * 4;
+    const protein_calories = food.protein * 4;
+    const totalCalories = fatCalories + carbohydrates_calories + protein_calories;
+    food.calories = totalCalories;
+})
+
 module.exports = foods
