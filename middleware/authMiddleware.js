@@ -1,24 +1,30 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/userModel');
+const asyncHandler = require('../middleware/asyncHandler');
+
 require('dotenv').config();
 
-const SECRET_KEY = process.env.SECRET_KEY;
 
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+const authenticateToken = asyncHandler (async(req, res, next) => {
+    let token;
 
-    if (!token) {
-        return res.status(401).json({ message: 'Token required' });
-    }
-
-    jwt.verify(token, SECRET_KEY, (err, user) => {
-        if (err) {
-            return res.status(403).json({ message: 'Invalid token' });
-        }
-
-        req.user = user;
-        next();
-    });
-};
+	// Read jwt from the cookie
+	token = req.cookies.jwt
+	if(token){
+		try{
+			const decoded = jwt.verify(token, process.env.SECRET_KEY)
+			console.log(decoded)
+			req.user = await User.findById(decoded.userId).select('-password')
+			next()
+		} catch(error) {
+			console.log(error)
+			res.status(401)
+			throw new Error('not authorized, token failed')
+		}
+	} else {
+		res.status(401)
+		throw new Error('not authorized, no token')
+	}
+})
 
 module.exports = authenticateToken;
