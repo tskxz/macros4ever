@@ -1,39 +1,50 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const users = require('../data/users');
+const User = require('../models/userModel');
+const authenticateToken = require('../middleware/authMiddleware');
+const asyncHandler = require('../middleware/asyncHandler');
 const router = express.Router();
 require('dotenv').config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
-router.post('/login', (req, res) => {
+router.post('/login', asyncHandler(async(req, res) => {
     const { email, password } = req.body;
 
-    const user = users.find((u) => u.email === email && u.password === password);
-    if (!user) {
+    const user = await User.findOne({email});
+    if (!user && user.password !== password) {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id, isAdmin: user.isAdmin }, SECRET_KEY, { expiresIn: '1h' });
 
-    res.json({ token });
-});
+    res.cookie('jwt', token, {
+        httpOnly: true,
+        sameSite: 'strict'
+    })
 
-router.get('/profile', (req, res) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ message: 'Token required' });
-    }
-
-    jwt.verify(token, SECRET_KEY, (err, user) => {
-        if (err) {
-            return res.status(403).json({ message: 'Invalid token' });
-        }
-
-        res.json({ message: 'Access granted', user });
+    res.json({
+        userId: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin,
     });
+}));
+
+
+router.get('/', authenticateToken, (req, res) => {
+    res.json(users)
+})
+
+router.post('/logout', (req, res) => {
+    res.cookie('jwt', '', {
+		httpOnly: true,
+		expires: new Date(0)
+	})
+	res.status(200).json({message: 'Logged out successfully'})
+})
+
+router.get('/profile', authenticateToken, (req, res) => {
+    res.json(req.user)
 });
 
 module.exports = router;
