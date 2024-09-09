@@ -10,4 +10,15 @@ const importData = async () => {
     process.exit();
 }
 
-importData();
+
+const destroyData = async () => {
+    await Food.deleteMany();
+    console.log('Deleted all foods.');
+    process.exit()
+}
+
+if(process.argv[2] === '-d') {
+    destroyData();
+} else {
+    importData();
+}
