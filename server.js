@@ -1,19 +1,21 @@
-const express = require('express')
+const express = require('express');
+const bodyParser = require('body-parser');
 
-const app = express()
+const app = express();
+const foodRoute = require('./routes/foodRoute');
+const userRoute = require('./routes/userRoute');
 
-const foodRoute = require('./routes/foodRoute')
-const userRoute = require('./routes/userRoute')
+const port = 3000;
 
-const port = 3000
+app.use(bodyParser.json());
 
-app.use('/api/foods', foodRoute)
-app.use('/api/users', userRoute)
+app.use('/api/foods', foodRoute);
+app.use('/api/users', userRoute);
 
-app.get('/', (req,res) => {
-    res.send('Running!')
-})
+app.get('/', (req, res) => {
+    res.send('Running!');
+});
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
-})
+    console.log(`Server is running on port ${port}`);
+});
