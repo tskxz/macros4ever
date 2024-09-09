@@ -6,7 +6,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "data:import": "node seeders/foodSeeder.js",
+    "data:destroy": "node seeders/foodSeeder.js -d"
   },
   "author": "",
   "license": "ISC",
