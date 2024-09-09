@@ -1,10 +1,11 @@
-const express = require('express')
-const foods = require('../data/foods')
+const express = require('express');
+const foods = require('../data/foods');
+const authenticateToken = require('../middleware/authMiddleware');
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json(foods)
-})
+router.get('/', authenticateToken, (req, res) => {
+    res.json(foods);
+});
 
-module.exports = router
+module.exports = router;
