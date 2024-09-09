@@ -1,14 +1,22 @@
-const express = require('express')
-const app = express()
-const foodRoute = require('./routes/foodRoute')
-const port = 3000
+const express = require('express');
+const cookieParser = require('cookie-parser');
 
-app.use('/api/foods', foodRoute)
+const app = express();
+const foodRoute = require('./routes/foodRoute');
+const userRoute = require('./routes/userRoute');
 
-app.get('/', (req,res) => {
-    res.send('Running!')
-})
+const port = 3000;
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.use('/api/foods', foodRoute);
+app.use('/api/users', userRoute);
+
+app.get('/', (req, res) => {
+    res.send('Running!');
+});
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
-})
+    console.log(`Server is running on port ${port}`);
+});
