@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const foodRoute = require('./routes/foodRoute');
@@ -7,7 +7,8 @@ const userRoute = require('./routes/userRoute');
 
 const port = 3000;
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/foods', foodRoute);
 app.use('/api/users', userRoute);
