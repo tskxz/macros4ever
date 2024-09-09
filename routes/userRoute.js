@@ -4,6 +4,8 @@ const User = require('../models/userModel');
 const authenticateToken = require('../middleware/authMiddleware');
 const asyncHandler = require('../middleware/asyncHandler');
 const router = express.Router();
+const admin = require('../middleware/adminMiddleware');
+
 require('dotenv').config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -31,7 +33,8 @@ router.post('/login', asyncHandler(async(req, res) => {
 }));
 
 
-router.get('/', authenticateToken, (req, res) => {
+router.get('/', authenticateToken, admin, async(req, res) => {
+    const users = await User.find();
     res.json(users)
 })
 
