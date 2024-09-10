@@ -42,6 +42,17 @@ router.post('/myfoods', authenticateToken, async (req, res) => {
    }
 })
 
+router.post('/publish/:id', authenticateToken, admin, async (req, res) => {
+    const food = await Food.findById(req.params.id);
+    if(!food){
+        return res.status(404).json({ message: 'Food not found' });
+    } else {
+        food.public = true;
+        await food.save();
+        res.json(food);
+    }
+})
+
 router.get('/:id', async(req, res) => {
     const food = await Food.findById(req.params.id);
     if(food) {
