@@ -12,6 +12,15 @@ router.get('/', async (req, res) => {
     res.json(foods);
 });
 
+router.get('/:id', async(req, res) => {
+    const food = await Food.findById(req.params.id);
+    if(food) {
+        res.json(food);
+    } else {
+        res.status(404).json({ message: 'Food not found' });
+    }
+})
+
 router.post('/', authenticateToken, admin, async (req, res) => {
     const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories} = req.body;
     if(!name ||!fat || !carbohydrates || !protein){
