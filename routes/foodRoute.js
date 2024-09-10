@@ -27,6 +27,7 @@ router.post('/', authenticateToken, admin, async (req, res) => {
         return res.status(400).json({ message: 'Missing name, fat, carbohydrates or protein fields' });
    } else {
     const food = new Food({
+        user: req.user._id,
         name: name,
         unit: unit,
         serving_size: serving_size,
