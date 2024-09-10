@@ -17,7 +17,8 @@ const foodSchema = new mongoose.Schema({
     fiber: Number,
     protein: Number,
     salt: Number,
-    calories: Number
+    calories: Number,
+    public: Boolean,
 });
 
 const Food = mongoose.model('Food', foodSchema);
