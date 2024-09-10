@@ -59,4 +59,14 @@ router.put('/:id', authenticateToken, admin, async (req, res) => {
     }
 })
 
+router.delete('/:id', authenticateToken, admin, async (req, res) => {
+    const food = await Food.findByIdAndDelete(req.params.id)
+    if(food){
+        await food.deleteOne({_id: food._id});
+        res.json({ message: 'Food deleted successfully' });
+    } else {
+        res.status(404).json({ message: 'Food not found' });
+    }
+})
+
 module.exports = router;
