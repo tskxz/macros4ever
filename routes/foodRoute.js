@@ -1,11 +1,39 @@
 const express = require('express');
-const foods = require('../data/foods');
+const Food = require('../models/foodModel');
 const authenticateToken = require('../middleware/authMiddleware');
+const admin = require('../middleware/adminMiddleware');
 
 const router = express.Router();
 
-router.get('/', authenticateToken, (req, res) => {
+// @GET /api/foods
+// Public: Get all food items
+router.get('/', async (req, res) => {
+    const foods = await Food.find();
     res.json(foods);
 });
+
+router.post('/', authenticateToken, admin, async (req, res) => {
+    const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories} = req.body;
+    if(!name ||!unit ||!serving_size ||!fat ||!satured_fat || !carbohydrates || !fiber || !protein || !salt || !calories){
+        console.log(name, unit, serving_size, fat, satured_fat, carbohydrates, fiber, protein, salt, calories);
+        return res.status(400).json({ message: 'All fields are required' });
+   } else {
+    const food = new Food({
+        name: name,
+        unit: unit,
+        serving_size: serving_size,
+        fat: fat,
+        satured_fat: satured_fat,
+        carbohydrates: carbohydrates,
+        sugar: sugar,
+        fiber: fiber,
+        protein: protein,
+        salt: salt,
+        calories: calories,
+    })
+    const createdFood = await food.save();
+    res.json(createdFood);
+   }
+})
 
 module.exports = router;
