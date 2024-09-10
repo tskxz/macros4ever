@@ -14,22 +14,24 @@ router.post('/login', asyncHandler(async(req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({email});
-    if (!user && user.password !== password) {
+    if (!user || user.password !== password) {
         return res.status(401).json({ message: 'Invalid email or password' });
+    } else {
+        const token = jwt.sign({ userId: user._id, isAdmin: user.isAdmin }, SECRET_KEY, { expiresIn: '1h' });
+
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            sameSite: 'strict'
+        })
+
+        res.json({
+            userId: user._id,
+            email: user.email,
+            isAdmin: user.isAdmin,
+        });
     }
 
-    const token = jwt.sign({ userId: user._id, isAdmin: user.isAdmin }, SECRET_KEY, { expiresIn: '1h' });
-
-    res.cookie('jwt', token, {
-        httpOnly: true,
-        sameSite: 'strict'
-    })
-
-    res.json({
-        userId: user._id,
-        email: user.email,
-        isAdmin: user.isAdmin,
-    });
+    
 }));
 
 
