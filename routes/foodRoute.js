@@ -12,6 +12,11 @@ router.get('/', async (req, res) => {
     res.json(foods);
 });
 
+router.get('/myfoods', authenticateToken, async (req, res) => {
+    const myFoods = await Food.find({ user: req.user._id });
+    res.json(myFoods);
+});
+
 router.get('/:id', async(req, res) => {
     const food = await Food.findById(req.params.id);
     if(food) {
@@ -77,5 +82,6 @@ router.delete('/:id', authenticateToken, admin, async (req, res) => {
         res.status(404).json({ message: 'Food not found' });
     }
 })
+
 
 module.exports = router;
