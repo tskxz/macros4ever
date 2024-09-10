@@ -1,12 +1,21 @@
 const mongoose = require('mongoose');
 const foods = require('../data/foods');
+const users = require('../data/users');
 const Food = require('../models/foodModel');
+const User = require('../models/userModel');
 
 mongoose.connect('mongodb://127.0.0.1:27017/macros4ever');
 
 const importData = async () => {
-    const created_foods = await Food.create(foods);
-    console.log(`Created ${created_foods.length} foods.`);
+    const createdUsers = await User.insertMany(users);
+    
+    adminUser = createdUsers[0]._id
+    const sampleFoods = foods.map((food) => {
+        return {...food, user: adminUser}
+    })
+    
+    await Food.insertMany(sampleFoods);
+    console.log(`Created ${sampleFoods.length} foods.`);
     process.exit();
 }
 

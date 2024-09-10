@@ -10,6 +10,7 @@ const foods = [
         fiber: 0,
         protein: 3.8,
         salt: 0,
+        public: true
     },
 
     {
@@ -23,6 +24,7 @@ const foods = [
         fiber: 4.2,
         protein: 7.5,
         salt: 0.65,
+        public: true
     }
 ]
 
