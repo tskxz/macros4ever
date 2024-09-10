@@ -11,7 +11,7 @@
     "data:destroy": "node seeders/foodSeeder.js -d && node seeders/userSeeder.js -d",
     "start": "node server.js",
     "build": "npm install",
-    "dev": "nomdemon server.js"
+    "dev": "nodemon server.js"
 
   },
   "author": "",
