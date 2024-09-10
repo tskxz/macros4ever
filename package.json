@@ -7,9 +7,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "data:import": "node seeders/foodSeeder.js",
-    "data:destroy": "node seeders/foodSeeder.js -d",
-    "start": "node server.js"
+    "data:import": "node seeders/foodSeeder.js && node seeders/userSeeder.js",
+    "data:destroy": "node seeders/foodSeeder.js -d && node seeders/userSeeder.js -d",
+    "start": "node server.js",
+    "build": "npm install",
+    "dev": "nodemon server.js"
+
   },
   "author": "",
   "license": "ISC",
