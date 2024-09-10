@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const users = require('../data/users');
 const User = require('../models/userModel');
 
-mongoose.connect('mongodb://127.0.0.1:27017/food4ever');
+mongoose.connect('mongodb://127.0.0.1:27017/macros4ever');
 
 const importData = async () => {
     const created_users = await User.create(users);

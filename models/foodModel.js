@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/food4ever');
+mongoose.connect('mongodb://127.0.0.1:27017/macros4ever');
 
 const foodSchema = new mongoose.Schema({
     name: String,
