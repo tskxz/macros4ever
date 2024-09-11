@@ -2,7 +2,7 @@ const express = require('express');
 const Food = require('../models/foodModel');
 const authenticateToken = require('../middleware/authMiddleware');
 const admin = require('../middleware/adminMiddleware');
-const {getFoods, myFoods, createMyFood, publishFood, getFood} = require('../controllers/foodController');
+const {getFoods, myFoods, createMyFood, publishFood, getFood, createFood} = require('../controllers/foodController');
 
 const router = express.Router();
 
@@ -28,30 +28,7 @@ router.get('/:id', getFood);
 
 // @POST /api/foods/
 // Private Admin: Create a new food item
-router.post('/', authenticateToken, admin, async (req, res) => {
-    const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories, public} = req.body;
-    if(!name ||!fat || !carbohydrates || !protein){
-        return res.status(400).json({ message: 'Missing name, fat, carbohydrates or protein fields' });
-   } else {
-    const food = new Food({
-        user: req.user._id,
-        name: name,
-        unit: unit,
-        serving_size: serving_size,
-        fat: fat,
-        satured_fat: satured_fat,
-        carbohydrates: carbohydrates,
-        sugar: sugar,
-        fiber: fiber,
-        protein: protein,
-        salt: salt,
-        calories: calories || fat * 9 + carbohydrates * 4 + protein * 4,
-        public: public || false,
-    })
-    const createdFood = await food.save();
-    res.json(createdFood);
-   }
-})
+router.post('/', authenticateToken, admin, createFood);
 
 // @PUT /api/foods/:id
 // Private Admin: Update a food item with the given ID
