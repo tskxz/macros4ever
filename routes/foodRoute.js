@@ -2,15 +2,13 @@ const express = require('express');
 const Food = require('../models/foodModel');
 const authenticateToken = require('../middleware/authMiddleware');
 const admin = require('../middleware/adminMiddleware');
+const {getFoods} = require('../controllers/foodController');
 
 const router = express.Router();
 
 // @GET /api/foods
 // Public: Get all food items
-router.get('/', async (req, res) => {
-    const foods = await Food.find({public: true});
-    res.json(foods);
-});
+router.get('/', getFoods);
 
 // @GET /api/foods/myfoods
 // Private: Get all food items created by the authenticated user
