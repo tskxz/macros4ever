@@ -5,6 +5,12 @@ const getFoods = async(req, res) => {
     res.json(foods);
 }
 
+const myFoods = async(req, res) => {
+    const myFoods = await Food.find({ user: req.user._id });
+    res.json(myFoods)
+}
+
 module.exports = {
-    getFoods
+    getFoods,
+    myFoods,
 }

@@ -2,7 +2,7 @@ const express = require('express');
 const Food = require('../models/foodModel');
 const authenticateToken = require('../middleware/authMiddleware');
 const admin = require('../middleware/adminMiddleware');
-const {getFoods} = require('../controllers/foodController');
+const {getFoods, myFoods} = require('../controllers/foodController');
 
 const router = express.Router();
 
@@ -12,10 +12,7 @@ router.get('/', getFoods);
 
 // @GET /api/foods/myfoods
 // Private: Get all food items created by the authenticated user
-router.get('/myfoods', authenticateToken, async (req, res) => {
-    const myFoods = await Food.find({ user: req.user._id });
-    res.json(myFoods);
-});
+router.get('/myfoods', authenticateToken, myFoods);
 
 // @POST /api/foods/myfoods
 // Private: Create a new food item for the authenticated user
