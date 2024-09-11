@@ -40,8 +40,20 @@ const createMyFood = async(req, res) => {
     }
 }
 
+const publishFood = async(req, res) => {
+    const food = await Food.findByIdAndUpdate(req.params.id)
+    if(!food){
+        return res.status(404).json({ message: 'Food not found' });
+    } else {
+        food.public = true;
+        await food.save();
+        res.json(food);
+    }
+}
+
 module.exports = {
     getFoods,
     myFoods,
-    createMyFood
+    createMyFood,
+    publishFood
 }
