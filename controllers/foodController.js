@@ -51,9 +51,19 @@ const publishFood = async(req, res) => {
     }
 }
 
+const getFood = async(req, res) => {
+    const food = await Food.findById(req.params.id);
+    if(food){
+        res.json(food)
+    } else {
+        res.status(404).json({ message: 'Food not found' });
+    }
+}
+
 module.exports = {
     getFoods,
     myFoods,
     createMyFood,
-    publishFood
+    publishFood,
+    getFood,
 }

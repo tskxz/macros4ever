@@ -2,7 +2,7 @@ const express = require('express');
 const Food = require('../models/foodModel');
 const authenticateToken = require('../middleware/authMiddleware');
 const admin = require('../middleware/adminMiddleware');
-const {getFoods, myFoods, createMyFood, publishFood} = require('../controllers/foodController');
+const {getFoods, myFoods, createMyFood, publishFood, getFood} = require('../controllers/foodController');
 
 const router = express.Router();
 
@@ -24,14 +24,7 @@ router.post('/publish/:id', authenticateToken, admin, publishFood)
 
 // @GET /api/foods/:id
 // Public: Get a single food item with the given ID
-router.get('/:id', async(req, res) => {
-    const food = await Food.findById(req.params.id);
-    if(food) {
-        res.json(food);
-    } else {
-        res.status(404).json({ message: 'Food not found' });
-    }
-})
+router.get('/:id', getFood);
 
 // @POST /api/foods/
 // Private Admin: Create a new food item
