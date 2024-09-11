@@ -12,11 +12,15 @@ router.get('/', async (req, res) => {
     res.json(foods);
 });
 
+// @GET /api/foods/myfoods
+// Private: Get all food items created by the authenticated user
 router.get('/myfoods', authenticateToken, async (req, res) => {
     const myFoods = await Food.find({ user: req.user._id });
     res.json(myFoods);
 });
 
+// @POST /api/foods/myfoods
+// Private: Create a new food item for the authenticated user
 router.post('/myfoods', authenticateToken, async (req, res) => {
     const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories} = req.body;
     if(!name ||!fat || !carbohydrates || !protein){
@@ -42,6 +46,8 @@ router.post('/myfoods', authenticateToken, async (req, res) => {
    }
 })
 
+// @POST /api/foods/publish/:id
+// Private Admin: Publish a food item with the given ID
 router.post('/publish/:id', authenticateToken, admin, async (req, res) => {
     const food = await Food.findById(req.params.id);
     if(!food){
@@ -53,6 +59,8 @@ router.post('/publish/:id', authenticateToken, admin, async (req, res) => {
     }
 })
 
+// @GET /api/foods/:id
+// Public: Get a single food item with the given ID
 router.get('/:id', async(req, res) => {
     const food = await Food.findById(req.params.id);
     if(food) {
@@ -62,6 +70,8 @@ router.get('/:id', async(req, res) => {
     }
 })
 
+// @POST /api/foods/
+// Private Admin: Create a new food item
 router.post('/', authenticateToken, admin, async (req, res) => {
     const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories, public} = req.body;
     if(!name ||!fat || !carbohydrates || !protein){
@@ -87,6 +97,8 @@ router.post('/', authenticateToken, admin, async (req, res) => {
    }
 })
 
+// @PUT /api/foods/:id
+// Private Admin: Update a food item with the given ID
 router.put('/:id', authenticateToken, admin, async (req, res) => {
     const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories} = req.body;
     const food = await Food.findById(req.params.id)
@@ -110,6 +122,8 @@ router.put('/:id', authenticateToken, admin, async (req, res) => {
     }
 })
 
+// @DELETE /api/foods/:id
+// Private Admin: Delete a food item with the given ID
 router.delete('/:id', authenticateToken, admin, async (req, res) => {
     const food = await Food.findByIdAndDelete(req.params.id)
     if(food){
