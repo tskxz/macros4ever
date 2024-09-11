@@ -2,7 +2,7 @@ const express = require('express');
 const Food = require('../models/foodModel');
 const authenticateToken = require('../middleware/authMiddleware');
 const admin = require('../middleware/adminMiddleware');
-const {getFoods, myFoods, createMyFood, publishFood, getFood, createFood, updateFood} = require('../controllers/foodController');
+const {getFoods, myFoods, createMyFood, publishFood, getFood, createFood, updateFood, deleteFood} = require('../controllers/foodController');
 
 const router = express.Router();
 
@@ -36,15 +36,7 @@ router.put('/:id', authenticateToken, admin, updateFood)
 
 // @DELETE /api/foods/:id
 // Private Admin: Delete a food item with the given ID
-router.delete('/:id', authenticateToken, admin, async (req, res) => {
-    const food = await Food.findByIdAndDelete(req.params.id)
-    if(food){
-        await food.deleteOne({_id: food._id});
-        res.json({ message: 'Food deleted successfully' });
-    } else {
-        res.status(404).json({ message: 'Food not found' });
-    }
-})
+router.delete('/:id', authenticateToken, admin, deleteFood)
 
 
 module.exports = router;
