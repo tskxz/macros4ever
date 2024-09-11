@@ -2,7 +2,7 @@ const express = require('express');
 const Food = require('../models/foodModel');
 const authenticateToken = require('../middleware/authMiddleware');
 const admin = require('../middleware/adminMiddleware');
-const {getFoods, myFoods, createMyFood, publishFood, getFood, createFood} = require('../controllers/foodController');
+const {getFoods, myFoods, createMyFood, publishFood, getFood, createFood, updateFood} = require('../controllers/foodController');
 
 const router = express.Router();
 
@@ -32,28 +32,7 @@ router.post('/', authenticateToken, admin, createFood);
 
 // @PUT /api/foods/:id
 // Private Admin: Update a food item with the given ID
-router.put('/:id', authenticateToken, admin, async (req, res) => {
-    const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories} = req.body;
-    const food = await Food.findById(req.params.id)
-    if(food){
-        food.name = name;
-        food.unit = unit;
-        food.serving_size = serving_size;
-        food.fat = fat;
-        food.satured_fat = satured_fat;
-        food.carbohydrates = carbohydrates;
-        food.sugar = sugar;
-        food.fiber = fiber;
-        food.protein = protein;
-        food.salt = salt;
-        food.calories = calories;
-
-        const updatedFood = await food.save();
-        res.json(updatedFood);
-    } else {
-        res.status(404).json({ message: 'Food not found' });
-    }
-})
+router.put('/:id', authenticateToken, admin, updateFood)
 
 // @DELETE /api/foods/:id
 // Private Admin: Delete a food item with the given ID

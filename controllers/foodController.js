@@ -85,6 +85,29 @@ const createFood = async (req, res) => {
    }
 }
 
+const updateFood = async (req, res) => {
+    const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories} = req.body;
+    const food = await Food.findById(req.params.id)
+    if(food){
+        food.name = name || food.name;
+        food.unit = unit || food.unit;
+        food.serving_size = serving_size || food.serving_size;
+        food.fat = fat || food.fat;
+        food.satured_fat = satured_fat || food.satured_fat;
+        food.carbohydrates = carbohydrates || food.carbohydrates;
+        food.sugar = sugar || food.sugar;
+        food.fiber = fiber || food.fiber;
+        food.protein = protein || food.protein;
+        food.salt = salt || food.salt;
+        food.calories = calories || food.fat * 9 + food.carbohydrates * 4 + food.protein * 4;
+
+        const updatedFood = await food.save();
+        res.json(updatedFood);
+    } else {
+        res.status(404).json({ message: 'Food not found' });
+    }
+}
+
 module.exports = {
     getFoods,
     myFoods,
@@ -92,4 +115,5 @@ module.exports = {
     publishFood,
     getFood,
     createFood,
+    updateFood
 }
