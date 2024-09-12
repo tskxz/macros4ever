@@ -97,14 +97,28 @@ Follow these steps to set up a development environment:
      mongod
      ```
 
-5. **Run the Application**:
+5. **Execute Seeder**:
+   - To populate your database with initial data, you need to run the seeder script.
+   - This step is essential for setting up the initial data required for the application to function correctly.
+   - **Usage**:
+     - Ensure your MongoDB server is running.
+     - Execute the following command to import the seed data into your database:
+
+     ```bash
+     npm run data:import
+     ```
+
+   - This command will load predefined data into your database collections. Verify that the data has been correctly inserted by checking the database.
+
+
+6. **Run the Application**:
    - Start the application server.
 
      ```bash
-     npm start
+     npm run dev
      ```
 
-6. **Verify Setup**:
+7. **Verify Setup**:
    - Check if the application is running by visiting `http://localhost:3000` in your web browser.
 
 Repeat these steps as needed to configure or troubleshoot your development environment.
