@@ -64,7 +64,7 @@ const createMeal = async(req, res) => {
 }
 
 const deleteMeal = async(req, res) => {
-    const meal = await Meal.findById(req.params.id)
+    const meal = await Meal.findById({user: req.user._id, _id: req.params.id  });
     if(meal){
         await meal.deleteOne({_id: meal._id});
         res.json({ message: 'Meal deleted successfully' });
