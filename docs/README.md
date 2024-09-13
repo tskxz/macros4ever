@@ -184,6 +184,23 @@ This section describes the available API endpoints and how to use them.
   - **Private**: Retrieve the authenticated user's information.
   - **Usage**: Requires authentication. Returns the profile details of the currently logged-in user.
 
+### Meal Routes
+
+- **`GET /api/meals`**
+  - **Private**: Retrieve all meals created by the authenticated user.
+  - **Usage**: Requires authentication. Returns all meals that the currently logged-in user has created.
+
+- **`GET /api/meals/:id`**
+  - **Private**: Retrieve a single meal created by the authenticated user.
+  - **Usage**: Requires authentication. Returns details of a specific meal created by the currently logged-in user.
+
+- **`POST /api/meals`**
+  - **Private**: Create a new meal for the authenticated user.
+  - **Usage**: Requires authentication. Allows users to create a new meal by specifying food items and quantities.
+
+- **`DELETE /api/meals/:id`**
+  - **Private**: Delete a meal created by the authenticated user.
+  - **Usage**: Requires authentication. Deletes a specific meal created by the currently logged-in user.
 
 
 ## ⛏️ Built Using <a name = "built_using"></a>
