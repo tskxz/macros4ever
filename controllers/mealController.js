@@ -1,5 +1,5 @@
-const Meal = require('./models/mealModel');
-const Food = require('./models/foodModel');
+const Meal = require('../models/mealModel');
+const Food = require('../models/foodModel');
 
 const getMeals = async( req, res) => {
     const meals = await Meal.find({user: req.user._id}).populate('mealItens.food');
@@ -57,5 +57,15 @@ const createMeal = async(req, res) => {
     }
 }
 
+const deleteMeal = async(req, res) => {
+    const meal = await Meal.findById(req.params.id)
+    if(meal){
+        await meal.deleteOne({_id: meal._id});
+        res.json({ message: 'Meal deleted successfully' });
+    } else {
+        res.status(404).json({ message: 'Meal not found' });
+    }
+}
 
-module.exports = {getMeals, createMeal}
+
+module.exports = {getMeals, createMeal, deleteMeal}
