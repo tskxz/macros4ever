@@ -61,4 +61,14 @@ router.post('/', authenticateToken, async (req, res) => {
     }
 })
 
+router.delete('/:id', authenticateToken, async (req, res) => {
+    const meal = await Meal.findByIdAndDelete(req.params.id)
+    if(meal){
+        await meal.deleteOne({_id: meal._id});
+        res.json({ message: 'Meal deleted successfully' });
+    } else {
+        res.status(404).json({ message: 'Meal not found' });
+    }
+})
+
 module.exports = router
