@@ -6,6 +6,12 @@ const getMeals = async( req, res) => {
     res.json(meals);
 }
 
+const getMeal = async(req, res) => {
+    const mealId = req.params.id
+    const meal = await Meal.findById({_id: mealId, user: req.user._id}).populate('mealItens.food');
+    res.json(meal);
+}
+
 const createMeal = async(req, res) => {
 
     // Get the name of the meal and food items from the request body
@@ -68,4 +74,4 @@ const deleteMeal = async(req, res) => {
 }
 
 
-module.exports = {getMeals, createMeal, deleteMeal}
+module.exports = {getMeals, getMeal, createMeal, deleteMeal}
