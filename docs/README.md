@@ -8,8 +8,8 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/tskxz/macros4ever.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/tskxz/macros4ever.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/tskxz/macros4ever.svg)](https://github.com/tskxz/macros4ever/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/tskxz/macros4ever.svg)](https://github.com/tskxz/macros4ever/pulls)
 </div>
 
 ---
@@ -97,14 +97,28 @@ Follow these steps to set up a development environment:
      mongod
      ```
 
-5. **Run the Application**:
+5. **Execute Seeder**:
+   - To populate your database with initial data, you need to run the seeder script.
+   - This step is essential for setting up the initial data required for the application to function correctly.
+   - **Usage**:
+     - Ensure your MongoDB server is running.
+     - Execute the following command to import the seed data into your database:
+
+     ```bash
+     npm run data:import
+     ```
+
+   - This command will load predefined data into your database collections. Verify that the data has been correctly inserted by checking the database.
+
+
+6. **Run the Application**:
    - Start the application server.
 
      ```bash
-     npm start
+     npm run dev
      ```
 
-6. **Verify Setup**:
+7. **Verify Setup**:
    - Check if the application is running by visiting `http://localhost:3000` in your web browser.
 
 Repeat these steps as needed to configure or troubleshoot your development environment.
@@ -170,6 +184,23 @@ This section describes the available API endpoints and how to use them.
   - **Private**: Retrieve the authenticated user's information.
   - **Usage**: Requires authentication. Returns the profile details of the currently logged-in user.
 
+### Meal Routes
+
+- **`GET /api/meals`**
+  - **Private**: Retrieve all meals created by the authenticated user.
+  - **Usage**: Requires authentication. Returns all meals that the currently logged-in user has created.
+
+- **`GET /api/meals/:id`**
+  - **Private**: Retrieve a single meal created by the authenticated user.
+  - **Usage**: Requires authentication. Returns details of a specific meal created by the currently logged-in user.
+
+- **`POST /api/meals`**
+  - **Private**: Create a new meal for the authenticated user.
+  - **Usage**: Requires authentication. Allows users to create a new meal by specifying food items and quantities.
+
+- **`DELETE /api/meals/:id`**
+  - **Private**: Delete a meal created by the authenticated user.
+  - **Usage**: Requires authentication. Deletes a specific meal created by the currently logged-in user.
 
 
 ## ⛏️ Built Using <a name = "built_using"></a>
