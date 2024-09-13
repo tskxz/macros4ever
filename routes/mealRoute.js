@@ -5,6 +5,10 @@ const authenticateToken = require('../middleware/authMiddleware');
 
 const router = express.Router()
 
+router.get('/', authenticateToken, async (req, res) => {
+    const meals = await Meal.find({ user: req.user._id }).populate('mealItens.food');
+    res.json(meals);
+})
 router.post('/', authenticateToken, async (req, res) => {
     
     const {name, mealItens } = req.body;
