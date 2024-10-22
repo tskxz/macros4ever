@@ -14,7 +14,7 @@ const createMyFood = async(req, res) => {
     const {
         name, unit, serving_size,
         fat, carbohydrates, protein,
-        satured_fat, sugar, fiber,
+        saturated_fat, sugar, fiber,
         salt, calories
     } = req.body;
     if(!name ||!fat ||!carbohydrates ||!protein){
@@ -26,7 +26,7 @@ const createMyFood = async(req, res) => {
             unit: unit,
             serving_size: serving_size,
             fat: fat,
-            satured_fat: satured_fat,
+            saturated_fat: saturated_fat,
             carbohydrates: carbohydrates,
             sugar: sugar,
             fiber: fiber,
@@ -61,7 +61,7 @@ const getFood = async(req, res) => {
 }
 
 const createFood = async (req, res) => {
-    const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories, public} = req.body;
+    const {name, unit, serving_size, fat, saturated_fat, carbohydrates, sugar, fiber, protein, salt, calories, public} = req.body;
     if(!name ||!fat || !carbohydrates || !protein){
         return res.status(400).json({ message: 'Missing name, fat, carbohydrates or protein fields' });
    } else {
@@ -71,7 +71,7 @@ const createFood = async (req, res) => {
         unit: unit,
         serving_size: serving_size,
         fat: fat,
-        satured_fat: satured_fat,
+        saturated_fat: saturated_fat,
         carbohydrates: carbohydrates,
         sugar: sugar,
         fiber: fiber,
@@ -86,14 +86,14 @@ const createFood = async (req, res) => {
 }
 
 const updateFood = async (req, res) => {
-    const {name, unit, serving_size, fat, satured_fat, carbohydrates, sugar, fiber, protein, salt, calories} = req.body;
+    const {name, unit, serving_size, fat, saturated_fat, carbohydrates, sugar, fiber, protein, salt, calories} = req.body;
     const food = await Food.findById(req.params.id)
     if(food){
         food.name = name || food.name;
         food.unit = unit || food.unit;
         food.serving_size = serving_size || food.serving_size;
         food.fat = fat || food.fat;
-        food.satured_fat = satured_fat || food.satured_fat;
+        food.saturated_fat = saturated_fat || food.saturated_fat;
         food.carbohydrates = carbohydrates || food.carbohydrates;
         food.sugar = sugar || food.sugar;
         food.fiber = fiber || food.fiber;
