@@ -11,7 +11,7 @@ const foodSchema = new mongoose.Schema({
     unit: String,
     serving_size: Number,
     fat: Number,
-    satured_fat: Number,
+    saturated_fat: Number,
     carbohydrates: Number,
     sugar: Number,
     fiber: Number,
